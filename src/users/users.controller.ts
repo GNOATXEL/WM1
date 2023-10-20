@@ -28,7 +28,14 @@ export class UsersController {
 
     @Get(':id')
     getById(@Param() parameter):User {
-        return users[parameter.id]
+        for (let i=0;i<users.length;i++){
+            if(parameter.id==users[i].id){
+                return users[i];
+            }
+            else {
+                console.log("ERREUR")
+            }
+        }
     }
 
     @Put(':id')
