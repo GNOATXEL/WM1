@@ -1,55 +1,67 @@
 // users.controller.ts
-import { Controller, Get, Body, Post, Param , Put} from '@nestjs/common';
+import {Controller, Get, Body, Post, Param, Put, HttpException, HttpStatus, Delete} from '@nestjs/common';
 import { User } from './user.entity';
-import {isUndefined} from "@nestjs/common/utils/shared.utils"; // Assurez-vous que le chemin d'importation est correct
+import {isUndefined} from "@nestjs/common/utils/shared.utils";
+import {UsersService} from "./users.service"; // Assurez-vous que le chemin d'importation est correct
 
 const users: User[] = [
     {
         id: 0,
         lastname: 'Doe',
         firstname: 'John',
+        age: 23
     },
 
 ];
 
 @Controller('users')
 export class UsersController {
+    constructor(private service: UsersService) {
+    }
+
     @Post()
     create(@Body() input: any): User {
-        const nuser = new User(users.length,input.lastname, input.firstname)
-        users.push(nuser);
-        return nuser;
-
+        return this.service.create(input.lastname, input.firstname, input.age);
     }
+
     @Get()
     getAllUser(): User[] {
-        return users;
+        return this.service.users;
     }
 
     @Get(':id')
-    getById(@Param() parameter):User {
-        for (let i=0;i<users.length;i++){
-            if(parameter.id==users[i].id){
-                return users[i];
-            }
-            else {
-                console.log("ERREUR")
-            }
+    getById(@Param() parameter): User {
+        const a = this.service.getById(parameter.id);
+        if (a != undefined) {
+            return a;
+        } else {
+            throw new HttpException(
+                `Could not find a user with the id ${parameter.id}`,
+                HttpStatus.NOT_FOUND,
+            );
         }
     }
 
     @Put(':id')
-    update(@Param() parameter, @Body() input: any):void{
-        if(input.firstname !== undefined){
-        users[parameter.id].firstname=input.firstname }
-        if (input.lastname !== undefined){
-        users[parameter.id].lastname=input.lastname}
+    update(@Param() parameter, @Body() input: any): void {
+        if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age)) {
+            throw new HttpException(
+                `Could not find a user with the id ${parameter.id}`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
     }
 
-
+    @Delete(':id')
+    deleteUser(@Param() parameter): boolean {
+        if (this.service.deleteUser(parameter.id)) {
+            return true;
+        } else {
+            throw new HttpException(
+                `Could not find a user with the id ${parameter.id}`,
+                HttpStatus.NOT_FOUND,);
+        }
+    }
 }
-/* CHANGER COMMENT QUE LES ID ILS MARCHENT*/
-/* CHANGER COMMENT QUE LES ID ILS MARCHENT*/
-/* CHANGER COMMENT QUE LES ID ILS MARCHENT*/
-/* CHANGER COMMENT QUE LES ID ILS MARCHENT*/
-/* CHANGER COMMENT QUE LES ID ILS MARCHENT*/
+
+
