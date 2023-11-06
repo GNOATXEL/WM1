@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {User} from "../users/user.entity";
 import {Association} from "./association.entity";
 import {UsersService} from "../users/users.service";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import {UsersController} from "../users/users.controller";
 
 @Injectable()
@@ -13,6 +15,7 @@ export class AssociationsService {
         @InjectRepository(Association)
         private repository: Repository<Association>
     ) {}
+
     create(idUsers: number[], name: string): Association {
         var users: User[] = [];
         for(let i: number;i<idUsers.length;i++){

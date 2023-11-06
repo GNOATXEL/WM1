@@ -1,16 +1,16 @@
 import {Body, Delete, Get, HttpException, HttpStatus, Injectable, Param} from '@nestjs/common';
 import { User } from './user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class UsersService {
-  users: User[] = [
-    {
-      id: 0,
-      lastname: 'Doe',
-      firstname: 'John',
-      age: 23,
-    },
-  ];
+  constructor(
+    @InjectRepository(User)
+    private repository: Repository<User>
+) {}
+
   create(lastname: string, firstname: string, age: number): User {
      const u= new User(lastname, firstname, age);
     this.repository.save(u);
