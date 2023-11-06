@@ -12,18 +12,13 @@ export class UsersService {
     },
   ];
   create(lastname: string, firstname: string, age: number): User {
-     const u= new User(this.users.length,lastname, firstname, age);
-    this.users.push(u);
+     const u= new User(lastname, firstname, age);
+    this.repository.save(u);
     return u;
   }
 
-  getById(id:number):User {
-    for (let i = 0; i < this.users.length; i++) {
-      if (id == this.users[i].id) {
-        return this.users[i];
-
-      }
-    }
+  async getById(id: number): Promise<User> {
+    return await this.repository.findOne({where: {id: id}});
   }
 
   update(id:number, lastname: string, firstname: string, age: number): boolean {

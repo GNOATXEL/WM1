@@ -6,18 +6,19 @@ import {UsersController} from "../users/users.controller";
 
 @Injectable()
 export class AssociationsService {
-    associations :Association[] = [
-        {
-            id: 0,
-            idUsers: [0],
-            name: "association1"
-        },
-];
+
     constructor(
-        private service: UsersService
+
+        private service: UsersService; //sert à quoicoubeh????
+        @InjectRepository(Association)
+        private repository: Repository<Association>
     ) {}
     create(idUsers: number[], name: string): Association {
-        const a= new Association(this.associations.length,idUsers, name);
+        var users: User[] = [];
+        for(let i: number;i<idUsers.length;i++){
+            users.push(this.service.getById(idUsers[i]))
+        }
+        const a= new Association(this.associations.length,users, name);
         this.associations.push(a);
         return a;
     }
@@ -31,11 +32,11 @@ export class AssociationsService {
         }
     }
 
-    update(id:number, idUsers: number[], name: string): boolean {
+    update(id:number, users: User[], name: string): boolean {
         for (let i = 0; i < this.associations.length; i++){
             if(this.associations[i].id === id) {
-                if(idUsers!==undefined) {
-                    this.associations[id].idUsers = idUsers;
+                if(users!==undefined) {
+                    this.associations[id].users = users;
                 }
                 if(name!==undefined) {
                     this.associations[id].name = name;
@@ -57,14 +58,7 @@ export class AssociationsService {
     }
 
     getMembers(id:number):User[]{
-       const a= this.getById(id);
-       var tab: User[]=[];
-        for(let i=0;i<this.getById(id).idUsers.length;i++) {
-           tab.push(this.service.getById(a.idUsers[i]));
-        }
-        return tab;
-
-
+       return this.getById(id).users;
 }
 
 }
