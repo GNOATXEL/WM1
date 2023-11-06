@@ -25,8 +25,8 @@ export class UsersController {
     }
 
     @Get()
-    getAllUser(): User[] {
-        return this.service.users;
+    getAllUsers(): User[] {
+        return this.service.getAllUsers();
     }
 
     @Get(':id')
