@@ -14,9 +14,9 @@ import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
 import {User} from "../users/user.entity";
 
-@Controller('users')
-export class UsersController {
-    constructor(private service: UsersService) {
+@Controller('associations')
+export class AssociationsController {
+    constructor(private service: AssociationsService) {
     }
 
     @Post()

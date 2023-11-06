@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {User} from "../users/user.entity";
 import {Association} from "./association.entity";
+import {UsersService} from "../users/users.service";
+import {UsersController} from "../users/users.controller";
 
 @Injectable()
 export class AssociationsService {
@@ -11,6 +13,9 @@ export class AssociationsService {
             name: "association1"
         },
 ];
+    constructor(
+        private service: UsersService
+    ) {}
     create(idUsers: number[], name: string): Association {
         const a= new Association(this.associations.length,idUsers, name);
         this.associations.push(a);

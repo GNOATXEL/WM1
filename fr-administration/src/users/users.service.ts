@@ -1,4 +1,4 @@
-import {Body, Delete, HttpException, HttpStatus, Injectable, Param} from '@nestjs/common';
+import {Body, Delete, Get, HttpException, HttpStatus, Injectable, Param} from '@nestjs/common';
 import { User } from './user.entity';
 
 @Injectable()
@@ -54,4 +54,7 @@ export class UsersService {
     }
     return false;
 }
+  getAllUsers(): User[] {
+    return this.users;
+  }
 }
