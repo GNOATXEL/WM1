@@ -17,9 +17,10 @@ export class UsersService {
     return u;
   }
 
-  async getById(id: number): Promise<User> {
-    return await this.repository.findOne({where: {id: id}});
+  public async getById(idToFind: number): Promise<User> {
+  return await this.repository.findOne({where: {id: idToFind}});
   }
+
 
   update(id:number, lastname: string, firstname: string, age: number): boolean {
     for (let i = 0; i < this.users.length; i++){
