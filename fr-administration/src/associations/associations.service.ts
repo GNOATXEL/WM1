@@ -13,16 +13,18 @@ export class AssociationsService {
 
         private service: UsersService; //sert à quoicoubeh????
         @InjectRepository(Association)
-        private repository: Repository<Association>
+        private associationRepository: Repository<Association>
     ) {}
 
-    create(idUsers: number[], name: string): Association {
-        var users: User[] = [];
+    async create(idUsers: number[], name: string): Promise<Association> {
+        var users1: Repository<User>;
         for(let i: number;i<idUsers.length;i++){
-            users.push(this.service.getById(idUsers[i]))
+            var userToPush: User;
+            userToPush =  await this.service.getById(idUsers[i]);
+            users1.save(userToPush);
         }
-        const a= new Association(this.associations.length,users, name);
-        this.associations.push(a);
+        const a= new Association(users1, name);
+        this.associationRepository.save(a);
         return a;
     }
 
@@ -63,5 +65,9 @@ export class AssociationsService {
     getMembers(id:number):User[]{
        return this.getById(id).users;
 }
+
+    public async getAllAssociations(): Promise<Association[]> {
+        return this.associationRepository.find();
+    }
 
 }

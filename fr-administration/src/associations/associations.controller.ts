@@ -20,13 +20,13 @@ export class AssociationsController {
     }
 
     @Post()
-    create(@Body() input: any): Association {
+    async create(@Body() input: any): Promise<Association> {
         return this.service.create(input.idUsers, input.name);
     }
 
     @Get()
-    getAllUser(): Association[] {
-        return this.service.associations;
+    async getAllAssociations(): Promise<Association[]> {
+        return this.service.getAllAssociations();
     }
 
     @Get(':id')
@@ -64,9 +64,8 @@ export class AssociationsController {
     }
 
     @Get(':id/members')
-    getMembers(@Param() parameter): User[] {
+    async getMembers(@Param() parameter): Promise<User[]> {
         return this.service.getMembers(parameter.id);
     }
 }
-
 

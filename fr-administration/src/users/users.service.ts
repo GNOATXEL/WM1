@@ -8,17 +8,17 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private repository: Repository<User>
+    private userRepository: Repository<User>
 ) {}
 
   create(lastname: string, firstname: string, age: number): User {
      const u= new User(lastname, firstname, age);
-    this.repository.save(u);
+    this.userRepository.save(u);
     return u;
   }
 
   public async getById(idToFind: number): Promise<User> {
-  return await this.repository.findOne({where: {id: idToFind}});
+  return await this.userRepository.findOne({where: {id: idToFind}});
   }
 
 
@@ -26,16 +26,17 @@ export class UsersService {
     for (let i = 0; i < this.users.length; i++){
       if(this.users[i].id === id) {
         if(firstname!==undefined) {
-          this.users[id].firstname = firstname;
+          temp.firstname = firstname;
         }
         if(lastname!==undefined) {
-          this.users[id].lastname = lastname;
+          temp.lastname = lastname;
         }
         if(age!==undefined) {
-          this.users[id].age = age;
+          temp.age = age;
         }
+        await this.userRepository.save(temp);
         return true;
-        }
+
       }
     console.log("AMOGUS1")
     return false

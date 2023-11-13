@@ -18,7 +18,6 @@ export class User {
     constructor(lastname: string, firstname: string, age:number) {
         this.lastname = lastname;
         this.firstname = firstname;
-        this.id=id;
         this.age=age
     }
 
