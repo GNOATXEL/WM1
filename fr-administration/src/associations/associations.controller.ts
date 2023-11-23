@@ -30,7 +30,7 @@ export class AssociationsController {
     }
 
     @Get(':id')
-    getById(@Param() parameter): Association {
+    async getById(@Param() parameter): Promise<Association> {
         const a = this.service.getById(parameter.id);
         if (a != undefined) {
             return a;
@@ -43,7 +43,7 @@ export class AssociationsController {
     }
 
     @Put(':id')
-    update(@Param() parameter, @Body() input: any): void {
+    async update(@Param() parameter, @Body() input: any): Promise<void> {
         if (!this.service.update(parseFloat(parameter.id),input.idUsers, input.name)) {
             throw new HttpException(
                 `Could not find an association with the id ${parameter.id}`,
@@ -53,7 +53,7 @@ export class AssociationsController {
     }
 
     @Delete(':id')
-    deleteAssociation(@Param() parameter): boolean {
+   async deleteAssociation(@Param() parameter): Promise <boolean> {
         if (this.service.deleteAssociation(parameter.id)) {
             return true;
         } else {

@@ -1,4 +1,4 @@
-import {Body, Delete, Get, HttpException, HttpStatus, Injectable, Param} from '@nestjs/common';
+import {Body, Delete, Get, HttpException, HttpStatus, Injectable, NotFoundException, Param} from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -25,9 +25,9 @@ export class UsersService {
   }
 
 
-  update(id:number, lastname: string, firstname: string, age: number): boolean {
-    for (let i = 0; i < this.users.length; i++){
-      if(this.users[i].id === id) {
+ public async update(id:number, lastname: string, firstname: string, age: number): Promise<boolean> {
+   const temp = await this.userRepository.findOne({ where:{id: id}});
+    if(!!temp){
         if(firstname!==undefined) {
           temp.firstname = firstname;
         }
@@ -41,20 +41,22 @@ export class UsersService {
         return true;
 
       }
-    console.log("AMOGUS1")
+
     return false
     }
 
-  deleteUser(id:number): boolean {
-    for (let i = 0; i < this.users.length; i++) {
-      if (id == this.users[i].id) {
-        this.users.splice(i, 1);
-        return true;
-      }
+  public async deleteUser(id:number): Promise<boolean> {
+    const user = await this.userRepository.findOne({where:{id}});
+
+    if (!user) {
+      return false
     }
-    return false;
-}
-  getAllUsers(): User[] {
-    return this.users;
+
+    await this.userRepository.delete(user);
+    return true;
+  }
+
+  public async getAllUsers(): Promise<User[]> {
+    return this.userRepository.find();
   }
 }

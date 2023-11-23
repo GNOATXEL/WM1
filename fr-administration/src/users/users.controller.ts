@@ -32,12 +32,12 @@ export class UsersController {
     }
 
     @Get()
-    getAllUsers(): User[] {
-        return this.service.getAllUsers();
+    async getAllUsers(): Promise<User[]> {
+        return await this.service.getAllUsers();
     }
 
     @Get(':id')
-    getById(@Param() parameter): User {
+    async getById(@Param() parameter): Promise<User> {
         const a = this.service.getById(parameter.id);
         if (a != undefined) {
             return a;
@@ -50,7 +50,7 @@ export class UsersController {
     }
 
     @Put(':id')
-    update(@Param() parameter, @Body() input: any): void {
+    async update(@Param() parameter, @Body() input: any): Promise<void> {
         if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age)) {
             throw new HttpException(
                 `Could not find a user with the id ${parameter.id}`,
@@ -60,7 +60,7 @@ export class UsersController {
     }
 
     @Delete(':id')
-    deleteUser(@Param() parameter): boolean {
+    async deleteUser(@Param() parameter): Promise<boolean> {
         if (this.service.deleteUser(parameter.id)) {
             return true;
         } else {

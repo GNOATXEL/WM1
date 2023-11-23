@@ -3,7 +3,7 @@ import {User} from "../users/user.entity";
 import {Association} from "./association.entity";
 import {UsersService} from "../users/users.service";
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Equal, getRepository, Repository} from 'typeorm';
 import {UsersController} from "../users/users.controller";
 
 @Injectable()
@@ -11,7 +11,7 @@ export class AssociationsService {
 
     constructor(
 
-        private service: UsersService; //sert à quoicoubeh????
+        private service: UsersService,
         @InjectRepository(Association)
         private associationRepository: Repository<Association>
     ) {}
@@ -28,42 +28,43 @@ export class AssociationsService {
         return a;
     }
 
-    getById(id:number):Association {
-        for (let i = 0; i < this.associations.length; i++) {
-            if (id == this.associations[i].id) {
-                return this.associations[i];
+    async getById(id:number):Promise<Association> {
+        return this.associationRepository.findOne({where:{id:Equal(id)}})
 
             }
-        }
-    }
 
-    update(id:number, users: User[], name: string): boolean {
-        for (let i = 0; i < this.associations.length; i++){
-            if(this.associations[i].id === id) {
-                if(users!==undefined) {
-                    this.associations[id].users = users;
-                }
-                if(name!==undefined) {
-                    this.associations[id].name = name;
-                }
-                return true;
+    async update(id:number, users: Repository<User> , name: string): Promise<boolean> {
+        const temp = await this.associationRepository.findOne({ where:{id: id}});
+        if(!!temp){
+            if(users!==undefined) {
+                temp.users = users;
             }
+            if(name!==undefined) {
+                temp.name = name;
+            }
+            await this.associationRepository.save(temp);
+            return true;
+
         }
+
         return false
     }
 
-    deleteAssociation(id:number): boolean {
-        for (let i = 0; i < this.associations.length; i++) {
-            if (id == this.associations[i].id) {
-                this.associations.splice(i, 1);
-                return true;
-            }
+    async deleteAssociation(id:number): Promise <boolean> {
+
+        const associationtemp = await this.associationRepository.findOne({where:{id}});
+
+        if (!associationtemp) {
+            return false
         }
-        return false;
+
+        await this.associationRepository.remove(associationtemp);
+        return true;
     }
 
-    getMembers(id:number):User[]{
-       return this.getById(id).users;
+
+    async getMembers(id:number):Promise<User[]>{
+       return (await this.getById(id)).users.find();
 }
 
     public async getAllAssociations(): Promise<Association[]> {
