@@ -1,6 +1,7 @@
 import {User} from "../users/user.entity";
 import {Column, Entity, ManyToOne, ManyToMany, JoinTable, PrimaryGeneratedColumn, Repository} from "typeorm";
 
+
 @Entity()
 export class Association {
     @PrimaryGeneratedColumn()

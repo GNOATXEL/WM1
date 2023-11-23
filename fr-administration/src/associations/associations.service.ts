@@ -17,14 +17,14 @@ export class AssociationsService {
     ) {}
 
     async create(idUsers: number[], name: string): Promise<Association> {
-        var users1: Repository<User>;
+        let users: Repository<User> = getRepository(User);
         for(let i: number;i<idUsers.length;i++){
-            var userToPush: User;
+            let userToPush: User;
             userToPush =  await this.service.getById(idUsers[i]);
-            users1.save(userToPush);
+            await users.save(userToPush);
         }
-        const a= new Association(users1, name);
-        this.associationRepository.save(a);
+        const a= new Association(users, name);
+        await this.associationRepository.save(a);
         return a;
     }
 

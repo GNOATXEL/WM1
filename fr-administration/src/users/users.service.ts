@@ -12,9 +12,12 @@ export class UsersService {
 ) {}
 
   create(lastname: string, firstname: string, age: number): User {
-     const u= new User(lastname, firstname, age);
-    this.userRepository.save(u);
-    return u;
+    if(lastname!=undefined && firstname!=undefined && age!=undefined) {
+        const u = new User(lastname, firstname, age);
+        this.userRepository.save(u);
+        return u;
+    }
+    return null;
   }
 
   public async getById(idToFind: number): Promise<User> {

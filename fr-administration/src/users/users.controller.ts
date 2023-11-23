@@ -21,7 +21,14 @@ export class UsersController {
 
     @Post()
     create(@Body() input: any): User {
-        return this.service.create(input.lastname, input.firstname, input.age);
+        if (this.service.create(input.lastname, input.firstname, input.age) != undefined) {
+            return this.service.create(input.lastname, input.firstname, input.age);
+        } else {
+            throw new HttpException(
+                `Incorrect parameters`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
     }
 
     @Get()
