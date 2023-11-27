@@ -1,17 +1,19 @@
-// users.controller.ts
-import {Controller, Get, Body, Post, Param, Put, HttpException, HttpStatus, Delete} from '@nestjs/common';
+// 2controller.ts
+import {Controller, Get, Body, Post, Param, Put, HttpException, HttpStatus, Delete, UseGuards} from '@nestjs/common';
 import { User } from './user.entity';
 import {isUndefined} from "@nestjs/common/utils/shared.utils";
 import {UsersService} from "./users.service";
 import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
-import {UserInput} from "./user.input"; // Assurez-vous que le chemin d'importation est correct
+import {UserInput} from "./user.input";
+import {AuthGuard} from "@nestjs/passport"; // Assurez-vous que le chemin d'importation est correct
 
 const users: User[] = [
     {
         id: 0,
         lastname: 'Doe',
         firstname: 'John',
-        age: 23
+        age: 23,
+        password: '123'
     },
 
 ];
@@ -26,9 +28,10 @@ export class UsersController {
         description: 'The user has been successfully created.'
     })
     public async create(@Body() input: UserInput): Promise<User> {
-       return this.service.create(input.lastname, input.firstname, input.age);
+       return this.service.create(input.lastname, input.firstname, input.age, input.password);
     }
 
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiCreatedResponse({
         description: 'Users have been successfully returned'
@@ -57,8 +60,8 @@ export class UsersController {
     @ApiCreatedResponse({
         description: 'have been successfully modified'
     })
-    async update(@Param() parameter, @Body() input: any): Promise<void> {
-        if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age)) {
+    async update(@Param() parameter, @Body() input: UserInput): Promise<void> {
+        if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age, input.password)) {
             throw new HttpException(
                 `Could not find a user with the id ${parameter.id}`,
                 HttpStatus.NOT_FOUND,

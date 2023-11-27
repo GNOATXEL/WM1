@@ -2,6 +2,7 @@ import {Body, Delete, Get, HttpException, HttpStatus, Injectable, NotFoundExcept
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -11,10 +12,12 @@ export class UsersService {
     private userRepository: Repository<User>
 ) {}
 
-  create(lastname: string, firstname: string, age: number): User {
-    if(lastname!=undefined && firstname!=undefined && age!=undefined) {
+  async create(lastname: string, firstname: string, age: number, password: string): Promise<User> {
+    if(lastname!=undefined && firstname!=undefined && age!=undefined && password!=undefined) {
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(password, saltOrRounds);
 
-        const u = new User(lastname, firstname, age);
+        const u = new User(lastname, firstname, age, hash);
         this.userRepository.save(u);
         return u;
     }
@@ -30,7 +33,7 @@ export class UsersService {
   }
 
 
- public async update(id:number, lastname: string, firstname: string, age: number): Promise<boolean> {
+ public async update(id:number, lastname: string, firstname: string, age: number, password: string): Promise<boolean> {
    const temp = await this.userRepository.findOne({ where:{id: id}});
     if(!!temp){
         if(firstname!==undefined) {
@@ -41,6 +44,12 @@ export class UsersService {
         }
         if(age!==undefined) {
           temp.age = age;
+        }
+
+        if(password!==undefined) {
+            const saltOrRounds = 10;
+            const hash = await bcrypt.hash(password, saltOrRounds);
+            temp.password = hash;
         }
         await this.userRepository.save(temp);
         return true;

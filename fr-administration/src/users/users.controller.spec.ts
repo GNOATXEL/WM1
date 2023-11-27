@@ -36,7 +36,8 @@ describe('UsersController', () => {
         id: 0,
         firstname: 'John',
         lastname: 'Die',
-        age: 23
+        age: 23,
+        password: '123'
       }]);
       jest.spyOn(service, 'getAllUsers').mockImplementation(() => expected);
       expect(await controller.getAllUsers()).toBe(await expected);
@@ -46,8 +47,8 @@ describe('UsersController', () => {
 
   describe('getById', () => {
     it('should return a single user with the provided id', async () => {
-      const user1 = { id: 0, firstname: 'John', lastname: 'Dye', age: 23 };
-      const user2 = { id: 1, firstname: 'Jane', lastname: 'Doe', age: 30 };
+      const user1 = { id: 0, firstname: 'John', lastname: 'Dye', age: 23 , password:'123'};
+      const user2 = { id: 1, firstname: 'Jane', lastname: 'Doe', age: 30, password:'456' };
 
       jest.spyOn(service, 'getById').mockImplementation(id => {
         const users = [user1, user2];
@@ -62,7 +63,7 @@ describe('UsersController', () => {
 
   describe('getById', () => {
     it('should return a single user, with the provided id', async () => {
-      const expected = { id: 0, firstname: 'john',lastname:"Dye",age:23 }; // Exemple de données attendues
+      const expected = { id: 0, firstname: 'john',lastname:"Dye",age:23,password:'123' }; // Exemple de données attendues
 
       jest.spyOn(service, 'getById').mockImplementation(id => {
         return Promise.resolve(expected); // Renvoyer les données attendues

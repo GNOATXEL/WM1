@@ -1,4 +1,4 @@
-// user.entity.ts
+// 2entity.ts
 import {PrimaryGeneratedColumn, Column, Entity} from "typeorm";
 
 @Entity()
@@ -15,10 +15,14 @@ export class User {
     @Column()
     age: number;
 
-    constructor(lastname: string, firstname: string, age:number) {
+    @Column()
+    password: string;
+
+    constructor(lastname: string, firstname: string, age:number, password:string) {
         this.lastname = lastname;
         this.firstname = firstname;
-        this.age=age
+        this.age=age;
+        this.password=password;
     }
 
 }
