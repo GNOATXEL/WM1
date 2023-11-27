@@ -13,7 +13,10 @@ import {
 import { Association } from './association.entity';
 import { AssociationsService } from './associations.service';
 import {User} from "../users/user.entity";
+import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
+import {AssociationInput} from "./association.input";
 
+@ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
     constructor(private service: AssociationsService) {
@@ -63,6 +66,9 @@ export class AssociationsController {
         }
     }
 
+    @ApiCreatedResponse({
+        description: 'Members successfully returned.'
+    })
     @Get(':id/members')
     async getMembers(@Param() parameter): Promise<User[]> {
         return this.service.getMembers(parameter.id);

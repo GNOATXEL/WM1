@@ -2,7 +2,9 @@
 import {Controller, Get, Body, Post, Param, Put, HttpException, HttpStatus, Delete} from '@nestjs/common';
 import { User } from './user.entity';
 import {isUndefined} from "@nestjs/common/utils/shared.utils";
-import {UsersService} from "./users.service"; // Assurez-vous que le chemin d'importation est correct
+import {UsersService} from "./users.service";
+import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
+import {UserInput} from "./user.input"; // Assurez-vous que le chemin d'importation est correct
 
 const users: User[] = [
     {
@@ -13,22 +15,18 @@ const users: User[] = [
     },
 
 ];
-
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(private service: UsersService) {
     }
 
     @Post()
-    create(@Body() input: any): User {
-        if (this.service.create(input.lastname, input.firstname, input.age) != undefined) {
-            return this.service.create(input.lastname, input.firstname, input.age);
-        } else {
-            throw new HttpException(
-                `Incorrect parameters`,
-                HttpStatus.NOT_FOUND,
-            );
-        }
+    @ApiCreatedResponse({
+        description: 'The user has been successfully created.'
+    })
+    public async create(@Body() input: UserInput): Promise<User> {
+       return this.service.create(input.lastname, input.firstname, input.age);
     }
 
     @Get()
