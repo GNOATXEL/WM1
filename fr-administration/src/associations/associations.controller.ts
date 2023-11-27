@@ -23,16 +23,25 @@ export class AssociationsController {
     }
 
     @Post()
-    async create(@Body() input: any): Promise<Association> {
+    @ApiCreatedResponse({
+        description: 'The association has been successfully created.'
+    })
+    async create(@Body() input: AssociationInput): Promise<Association> {
         return this.service.create(input.idUsers, input.name);
     }
 
     @Get()
+    @ApiCreatedResponse({
+        description: 'Associations have been successfully returned.'
+    })
     async getAllAssociations(): Promise<Association[]> {
         return this.service.getAllAssociations();
     }
 
     @Get(':id')
+    @ApiCreatedResponse({
+        description: 'The association has been successfully returned.'
+    })
     async getById(@Param() parameter): Promise<Association> {
         const a = this.service.getById(parameter.id);
         if (a != undefined) {
@@ -46,6 +55,9 @@ export class AssociationsController {
     }
 
     @Put(':id')
+    @ApiCreatedResponse({
+        description: 'Association successfully updated'
+    })
     async update(@Param() parameter, @Body() input: any): Promise<void> {
         if (!this.service.update(parseFloat(parameter.id),input.idUsers, input.name)) {
             throw new HttpException(
@@ -56,6 +68,9 @@ export class AssociationsController {
     }
 
     @Delete(':id')
+    @ApiCreatedResponse({
+        description: 'The Association has been successfully deleted.'
+    })
    async deleteAssociation(@Param() parameter): Promise <boolean> {
         if (this.service.deleteAssociation(parameter.id)) {
             return true;

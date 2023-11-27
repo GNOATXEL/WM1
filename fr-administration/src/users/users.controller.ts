@@ -30,11 +30,17 @@ export class UsersController {
     }
 
     @Get()
+    @ApiCreatedResponse({
+        description: 'Users have been successfully returned'
+    })
     async getAllUsers(): Promise<User[]> {
         return await this.service.getAllUsers();
     }
 
     @Get(':id')
+    @ApiCreatedResponse({
+        description: 'User have been successfully returned'
+    })
     async getById(@Param() parameter): Promise<User> {
         const a = this.service.getById(parameter.id);
         if (a != undefined) {
@@ -48,6 +54,9 @@ export class UsersController {
     }
 
     @Put(':id')
+    @ApiCreatedResponse({
+        description: 'have been successfully modified'
+    })
     async update(@Param() parameter, @Body() input: any): Promise<void> {
         if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age)) {
             throw new HttpException(
@@ -58,6 +67,9 @@ export class UsersController {
     }
 
     @Delete(':id')
+    @ApiCreatedResponse({
+        description: 'The user has been successfully deleted.'
+    })
     async deleteUser(@Param() parameter): Promise<boolean> {
         if (this.service.deleteUser(parameter.id)) {
             return true;
