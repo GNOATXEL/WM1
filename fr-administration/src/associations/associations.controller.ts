@@ -43,6 +43,7 @@ export class AssociationsController {
         description: 'The association has been successfully returned.'
     })
     async getById(@Param() parameter): Promise<Association> {
+        console.log('aaa')
         const a = this.service.getById(parameter.id);
         if (a != undefined) {
             return a;

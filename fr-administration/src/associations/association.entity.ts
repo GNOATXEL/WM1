@@ -9,12 +9,12 @@ export class Association {
 
     @ManyToMany(() => User)
     @JoinTable()
-    users: Repository<User>;
+    users: User[];
 
     @Column()
     name: string;
 
-    constructor(users : Repository<User>, name: string,) {
+    constructor(users : User[], name: string,) {
 
         this.users=users;
         this.name=name;

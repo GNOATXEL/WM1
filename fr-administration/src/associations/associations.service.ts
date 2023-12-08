@@ -17,12 +17,15 @@ export class AssociationsService {
     ) {}
 
     async create(idUsers: number[], name: string): Promise<Association> {
-        let users: Repository<User> = getRepository(User);
-        for(let i: number;i<idUsers.length;i++){
+        let users: User[] = [];
+        if(idUsers.length!=0){
+            for(let i = 0;i<idUsers.length;i++){
             let userToPush: User;
             userToPush =  await this.service.getById(idUsers[i]);
-            await users.save(userToPush);
+            users.push(userToPush);
         }
+        }
+        console.log('après if');
         const a= new Association(users, name);
         await this.associationRepository.save(a);
         return a;
@@ -33,7 +36,7 @@ export class AssociationsService {
 
             }
 
-    async update(id:number, users: Repository<User> , name: string): Promise<boolean> {
+    async update(id:number, users: User[] , name: string): Promise<boolean> {
         const temp = await this.associationRepository.findOne({ where:{id: id}});
         if(!!temp){
             if(users!==undefined) {
@@ -64,7 +67,8 @@ export class AssociationsService {
 
 
     async getMembers(id:number):Promise<User[]>{
-       return (await this.getById(id)).users.find();
+        console.log("getmembers");
+       return (await this.getById(id)).users;
 }
 
     public async getAllAssociations(): Promise<Association[]> {

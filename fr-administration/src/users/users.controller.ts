@@ -31,7 +31,7 @@ export class UsersController {
        return this.service.create(input.lastname, input.firstname, input.age, input.password);
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiCreatedResponse({
         description: 'Users have been successfully returned'
@@ -42,7 +42,7 @@ export class UsersController {
 
     @Get(':id')
     @ApiCreatedResponse({
-        description: 'User have been successfully returned'
+        description: 'User has been successfully returned'
     })
     async getById(@Param() parameter): Promise<User> {
         const a = this.service.getById(parameter.id);
@@ -58,7 +58,7 @@ export class UsersController {
 
     @Put(':id')
     @ApiCreatedResponse({
-        description: 'have been successfully modified'
+        description: 'User has been successfully modified'
     })
     async update(@Param() parameter, @Body() input: UserInput): Promise<void> {
         if (!this.service.update(parseFloat(parameter.id),input.lastname, input.firstname, input.age, input.password)) {
