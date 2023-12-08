@@ -7,6 +7,10 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {Association} from "./associations/association.entity";
 import {User} from "./users/user.entity";
 import {AuthModule} from "./auth/auth.module";
+import {RolesModule} from "./roles/roles.module";
+import {Role} from "./roles/role.entity";
+import { MinutesModule } from './minutes/minutes.module';
+import { Minute } from './minutes/minute.entity';
 
 @Module({
   imports: [
@@ -15,13 +19,17 @@ import {AuthModule} from "./auth/auth.module";
               database: 'mydatabase.db',
               entities: [
                   User,
-                  Association
+                  Association,
+                  Role,
+                  Minute
               ],
               synchronize: true,
       }),
       UsersModule,
       AssociationsModule,
-      AuthModule
+      AuthModule,
+      RolesModule,
+      MinutesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

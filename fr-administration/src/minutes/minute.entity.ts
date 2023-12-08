@@ -4,24 +4,26 @@ import {PrimaryGeneratedColumn, Column, Entity, ManyToMany, JoinTable, OneToMany
 import {Association} from "../associations/association.entity";
 
 @Entity()
-export class Role {
+export class Minute {
 
     @PrimaryGeneratedColumn()
-    public id: number;
+    id: number;
 
     @Column()
-    public name: string;
+    name: string;
 
     @ManyToOne(()=> User )
-    public user: User;
+    @JoinTable()
+    idUser: number;
 
-    @ManyToOne(()=> Association)
-    public association: Association;
+    @ManyToOne(()=>Association)
+    @JoinTable()
+    idAssociation: number;
 
-    constructor(Rolename:string, user:User,association:Association) {
+    constructor(Rolename:string, idUser:number,idAssociation:number) {
         this.name = Rolename;
-        this.user = user;
-        this.association = association;
+        this.idUser = idUser;
+        this.idAssociation = idAssociation
     }
 
 }

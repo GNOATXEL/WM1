@@ -9,10 +9,10 @@ export class Association {
 
     @ManyToMany(() => User)
     @JoinTable()
-    users: User[];
+    public users: User[];
 
     @Column()
-    name: string;
+    public name: string;
 
     constructor(users : User[], name: string,) {
 

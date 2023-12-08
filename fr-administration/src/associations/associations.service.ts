@@ -5,13 +5,14 @@ import {UsersService} from "../users/users.service";
 import { InjectRepository } from '@nestjs/typeorm';
 import {Equal, getRepository, Repository} from 'typeorm';
 import {UsersController} from "../users/users.controller";
+import * as console from "console";
 
 @Injectable()
 export class AssociationsService {
 
     constructor(
 
-        private service: UsersService,
+        private _service: UsersService,
         @InjectRepository(Association)
         private associationRepository: Repository<Association>
     ) {}
@@ -21,7 +22,7 @@ export class AssociationsService {
         if(idUsers.length!=0){
             for(let i = 0;i<idUsers.length;i++){
             let userToPush: User;
-            userToPush =  await this.service.getById(idUsers[i]);
+            userToPush =  await this._service.getById(idUsers[i]);
             users.push(userToPush);
         }
         }

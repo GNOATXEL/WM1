@@ -5,17 +5,14 @@ import {isUndefined} from "@nestjs/common/utils/shared.utils";
 import {RolesService} from "./roles.service";
 import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
 import {RoleInput} from "./role.input";
-import {AuthGuard} from "@nestjs/passport"; // Assurez-vous que le chemin d'importation est correct
+import {AuthGuard} from "@nestjs/passport";
+import {RoleUpdate} from "./role.update";
+import {UsersService} from "../users/users.service";
+import {AssociationsService} from "../associations/associations.service"; // Assurez-vous que le chemin d'importation est correct
 
-const roles: Role[] = [
-    {
-        id: 0,
-        name: 'Role1',
-        idUser: 0,
-        idAssociation: 0
-    },
 
-];
+
+
 @ApiTags('roles')
 @Controller('roles')
 export class RolesController {
@@ -26,11 +23,11 @@ export class RolesController {
     @ApiCreatedResponse({
         description: 'The role has been successfully created.'
     })
-    public async create(@Body() input: RoleInput): Promise<Role> {
+    async create(@Body() input: RoleInput): Promise<Role> {
         return this.service.create(input.name, input.idUser, input.idAssociation);
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiCreatedResponse({
         description: 'Roles have been successfully returned'
@@ -39,12 +36,12 @@ export class RolesController {
         return await this.service.getAllRoles();
     }
 
-    @Get(':id')
+    @Get(':idU/:idA')
     @ApiCreatedResponse({
         description: 'Role has been successfully returned'
     })
     async getById(@Param() parameter): Promise<Role> {
-        const a = this.service.getById(parameter.id);
+        const a = this.service.getById(parameter.idU, parameter.idA);
         if (a != undefined) {
             return a;
         } else {
@@ -55,29 +52,29 @@ export class RolesController {
         }
     }
 
-    @Put(':id')
+    @Put(':idU/:idA')
     @ApiCreatedResponse({
         description: 'Role has been successfully modified'
     })
-    async update(@Param() parameter, @Body() input: RoleInput): Promise<void> {
-        if (!this.service.update(parseFloat(parameter.id),input.name, input.idUser, input.idAssociation)) {
+    async update(@Param() parameter, @Body() input: RoleUpdate): Promise<void> {
+        if (!this.service.update(parseFloat(parameter.idU),parseFloat(parameter.idA),input.name)) {
             throw new HttpException(
-                `Could not find a role with the id ${parameter.id}`,
+                `Could not find a role with the ids ${parameter.idU} & ${parameter.idA}`,
                 HttpStatus.NOT_FOUND,
             );
         }
     }
 
-    @Delete(':id')
+    @Delete(':idU/:idA')
     @ApiCreatedResponse({
         description: 'The role has been successfully deleted.'
     })
     async deleteUser(@Param() parameter): Promise<boolean> {
-        if (this.service.deleteRole(parameter.id)) {
+        if (await this.service.deleteRole(parameter.iU,parameter.idA)) {
             return true;
         } else {
             throw new HttpException(
-                `Could not find a role with the id ${parameter.id}`,
+                `Could not find a role with the ids ${parameter.idU} & ${parameter.idA}`,
                 HttpStatus.NOT_FOUND,);
         }
     }

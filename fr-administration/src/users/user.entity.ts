@@ -4,19 +4,19 @@ import {PrimaryGeneratedColumn, Column, Entity} from "typeorm";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    public id: number;
 
     @Column()
-    lastname: string;
+    public lastname: string;
 
     @Column()
-    firstname: string;
+    public firstname: string;
 
     @Column()
-    age: number;
+    public age: number;
 
     @Column()
-    password: string;
+    public password: string;
 
     constructor(lastname: string, firstname: string, age:number, password:string) {
         this.lastname = lastname;
