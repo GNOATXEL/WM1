@@ -7,23 +7,26 @@ import {Association} from "../associations/association.entity";
 export class Minute {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    public id: number;
 
     @Column()
-    name: string;
+    content: string;
 
-    @ManyToOne(()=> User )
+    @ManyToMany(()=> User,{ eager: true } )
     @JoinTable()
-    idUser: number;
+    idVoters: number[];
+
+    @Column()
+    date: string;
 
     @ManyToOne(()=>Association)
     @JoinTable()
     idAssociation: number;
 
-    constructor(Rolename:string, idUser:number,idAssociation:number) {
-        this.name = Rolename;
-        this.idUser = idUser;
-        this.idAssociation = idAssociation
+    constructor(content: string, idVoters: number[], date: string, idAssociation: number) {
+        this.content = content;
+        this.idVoters = idVoters;
+        this.date = date;
+        this.idAssociation = idAssociation;
     }
-
 }
