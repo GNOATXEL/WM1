@@ -5,16 +5,25 @@ import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ 'origin':'http://localhost:4200' });
+  app.enableCors({
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    allowedHeaders: ['Content-Type', 'Authorization']
+  });
+
+
   app.use(helmet());
 
   const config = new DocumentBuilder()
-  .setTitle('Gestion des Associations')
-  .setDescription('Descriptions des APIs de la gestion des associations')
-  .setVersion('1.0')
-  .build();
+      .setTitle('Gestion des Associations')
+      .setDescription('Descriptions des APIs de la gestion des associations')
+      .setVersion('1.0')
+      .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
 
   await app.listen(3000);
 }

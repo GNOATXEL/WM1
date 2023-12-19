@@ -15,6 +15,7 @@ export class AuthController {
     @ApiCreatedResponse({
         description: 'Success'
     })
+
     public async login(@Request() request) {
         return this.authService.login(request.user);
     }
