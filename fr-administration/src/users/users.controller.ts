@@ -31,7 +31,7 @@ export class UsersController {
        return this.service.create(input.lastname, input.firstname, input.age, input.password);
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiCreatedResponse({
         description: 'Users have been successfully returned'

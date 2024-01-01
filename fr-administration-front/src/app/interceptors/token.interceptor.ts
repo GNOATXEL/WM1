@@ -35,16 +35,16 @@ export class TokenHttpInterceptor implements HttpInterceptor {
     });
     // et envoyer la requête avec le token
     return next.handle(updatedRequest).pipe(
-      tap( {
-        next: (event) => {},
-        error: (error) => {if(error instanceof HttpErrorResponse){
+      tap( (event) => {},
+        (error) => {
+          if(error instanceof HttpErrorResponse){
                     if (error.status === 401){
                         //Redirection pour que l'utilisateur se reconnecte
                           this.router.navigateByUrl('/login');
                       }
                   }
         }
-      })
+      )
     );
   }
 }

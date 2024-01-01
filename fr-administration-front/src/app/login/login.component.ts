@@ -21,6 +21,7 @@ export class LoginComponent {
       const username: string = (document.getElementById('username') as HTMLInputElement).value;
       const password: string = (document.getElementById('password') as HTMLInputElement).value;
       console.log(username,password);
+      console.log("AMOGUS AMOGUS");
       this.api.post({
         endpoint: '/auth/login',
         data: {username, password}

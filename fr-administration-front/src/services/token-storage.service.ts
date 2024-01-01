@@ -23,6 +23,7 @@ export class TokenStorageService {
     return token === null ? '' : token;
   }
   public isLogged(): boolean {
+    console.log(localStorage.getItem(IS_LOGGED_IN));
     return (Boolean)(localStorage.getItem(IS_LOGGED_IN));
   }
 }
