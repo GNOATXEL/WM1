@@ -25,8 +25,9 @@ export class LoginComponent {
       this.api.post({
         endpoint: '/auth/login',
         data: {username, password}
-      }).then(response => {this.tokenStorageService.save(response.access_token);
-        this.router.navigateByUrl('/users');
+      }).then(response => {this.tokenStorageService.save(response.access_token, username);
+        console.log(response)
+        this.router.navigateByUrl('/profile');
       }).catch((reason) => {
         alert("amogus")
       });
