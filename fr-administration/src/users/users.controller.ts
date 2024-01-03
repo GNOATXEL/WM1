@@ -5,7 +5,9 @@ import {isUndefined} from "@nestjs/common/utils/shared.utils";
 import {UsersService} from "./users.service";
 import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
 import {UserInput} from "./user.input";
-import {AuthGuard} from "@nestjs/passport"; // Assurez-vous que le chemin d'importation est correct
+import {AuthGuard} from "@nestjs/passport";
+import {Association} from "../associations/association.entity";
+import {AssociationsService} from "../associations/associations.service"; // Assurez-vous que le chemin d'importation est correct
 
 const users: User[] = [
     {
@@ -20,7 +22,7 @@ const users: User[] = [
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-    constructor(private service: UsersService) {
+    constructor(private service: UsersService, private serviceA: AssociationsService) {
     }
 
     @Post()
@@ -82,6 +84,11 @@ export class UsersController {
                 HttpStatus.NOT_FOUND,);
         }
     }
+
+     @Get(':id/:associations')
+     async getAssociations(@Param() parameter): Promise<Association[]>{
+         return this.serviceA.getAssociationsOfMember(parseInt(parameter.id));
+ }
 }
 
 

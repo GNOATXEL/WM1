@@ -28,17 +28,23 @@ export class AssociationsService {
         }
         console.log('après if');
         const a= new Association(users, name);
+        console.log(a);
         await this.associationRepository.save(a);
         return a;
     }
 
     async getById(id:number):Promise<Association> {
-        return this.associationRepository.findOne({where:{id:Equal(id)}})
+        return this.associationRepository.findOne({where:{id:Equal(id)}, relations: ['users']})
 
             }
 
+    async SearchByName(name:string):Promise<Association[]> {
+        return this.associationRepository.find({where:{name:Equal(name)}})
+
+    }
+
     async update(id:number, users: User[] , name: string): Promise<boolean> {
-        const temp = await this.associationRepository.findOne({ where:{id: id}});
+        const temp = await this.associationRepository.findOne({ where:{id: id} });
         if(!!temp){
             if(users!==undefined) {
                 temp.users = users;
@@ -68,12 +74,20 @@ export class AssociationsService {
 
 
     async getMembers(id:number):Promise<User[]>{
-        console.log("getmembers");
+        console.log(await this.getById(id));
        return (await this.getById(id)).users;
 }
 
     public async getAllAssociations(): Promise<Association[]> {
         return this.associationRepository.find();
     }
+
+    public async getAssociationsOfMember(userId: number): Promise<Association[]> {
+        const associations = await this.associationRepository.find({ relations: ['users'] });
+
+        return associations.filter(association => association.users?.some(user => user.id === userId));
+    }
+
+
 
 }

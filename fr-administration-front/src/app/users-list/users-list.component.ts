@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {lastValueFrom, Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 //class User {} //pas convaincu nn plus
 
@@ -10,7 +11,7 @@ import {lastValueFrom, Observable} from "rxjs";
   styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   displayedColumns: string[] = ['id', 'lastname', 'firstname', 'age'];
   dataSource= []; //pas convaincu c pas comme l'énoncé mais sinon ça avait pas l'air de marcher (enft si jsp pk)
@@ -23,6 +24,11 @@ export class UsersListComponent implements OnInit {
     request.subscribe({
       next: (response) => (this.dataSource = response.body),
 });
+  }
+
+  idRedirect(id:number ): void{
+    this.router.navigateByUrl("/users/"+id);
+
   }
 }
 

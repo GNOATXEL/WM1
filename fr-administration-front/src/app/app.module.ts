@@ -14,6 +14,8 @@ import { NavComponent } from './nav/nav.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AssociationsListComponent } from './associations-list/associations-list.component';
 import { UsersDetailsComponent } from './users-details/users-details.component';
+import {FormsModule} from "@angular/forms";
+import { AssociationsDetailsComponent } from './associations-details/associations-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
     NavComponent,
     ProfileComponent,
     AssociationsListComponent,
-    UsersDetailsComponent
+    UsersDetailsComponent,
+    AssociationsDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,17 +33,17 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [
     provideClientHydration(),
     {
-          provide: HTTP_INTERCEPTORS,
-       useClass: TokenHttpInterceptor,
-        multi: true,
-      },
-
-],
-  bootstrap: [AppComponent]
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenHttpInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

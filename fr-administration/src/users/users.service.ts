@@ -3,13 +3,14 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import {Association} from "../associations/association.entity";
 
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
 ) {}
 
   async create(lastname: string, firstname: string, age: number, password: string): Promise<User> {
@@ -73,4 +74,5 @@ export class UsersService {
   public async getAllUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
+
 }

@@ -6,6 +6,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {ProfileComponent} from "./profile/profile.component";
 import {AssociationsListComponent} from "./associations-list/associations-list.component";
 import {UsersDetailsComponent} from "./users-details/users-details.component";
+import {AssociationsDetailsComponent} from "./associations-details/associations-details.component";
 
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:'login',component: LoginComponent},
   {path:'profile',component: ProfileComponent,canActivate: [AuthGuard]},
   {path: '', redirectTo:'login', pathMatch:'full'},
-  {path: 'users/:id', component: UsersDetailsComponent,canActivate: [AuthGuard] }
+  {path: 'users/:id', component: UsersDetailsComponent,canActivate: [AuthGuard] },
+  {path: 'associations/:id', component: AssociationsDetailsComponent,canActivate: [AuthGuard] }
 ];
 
 

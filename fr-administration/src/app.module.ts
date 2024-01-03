@@ -11,6 +11,9 @@ import {RolesModule} from "./roles/roles.module";
 import {Role} from "./roles/role.entity";
 import { MinutesModule } from './minutes/minutes.module';
 import { Minute } from './minutes/minute.entity';
+import {RolesController} from "./roles/roles.controller";
+import {AuthService} from "./auth/auth.service";
+import {JwtService} from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -31,7 +34,7 @@ import { Minute } from './minutes/minute.entity';
       RolesModule,
       MinutesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, RolesController],
+  providers: [AppService, AuthService, JwtService],
 })
 export class AppModule {}
