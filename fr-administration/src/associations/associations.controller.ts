@@ -15,11 +15,13 @@ import { AssociationsService } from './associations.service';
 import {User} from "../users/user.entity";
 import {ApiCreatedResponse, ApiTags} from "@nestjs/swagger";
 import {AssociationInput} from "./association.input";
+import {Minute} from "../minutes/minute.entity";
+import {MinutesService} from "../minutes/minutes.service";
 
 @ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
-    constructor(private service: AssociationsService) {
+    constructor(private service: AssociationsService, private serviceM: MinutesService) {
     }
 
     @Post()
@@ -89,5 +91,10 @@ export class AssociationsController {
     async getMembers(@Param() parameter): Promise<User[]> {
         return this.service.getMembers(parameter.id);
     }
+
+     @Get(':id/minutes')
+     async getMinutes(@Param() parameter): Promise<Minute[]>{
+         return this.serviceM.getMinutesOfAssociation(parseInt(parameter.id));
+     }
 }
 

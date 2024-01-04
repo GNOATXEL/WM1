@@ -19,8 +19,7 @@ export class Minute {
     @Column()
     date: string;
 
-    @ManyToOne(()=>Association)
-    @JoinTable()
+    @Column()
     idAssociation: number;
 
     constructor(content: string, idVoters: number[], date: string, idAssociation: number) {

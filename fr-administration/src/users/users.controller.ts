@@ -58,6 +58,19 @@ export class UsersController {
         }
     }
 
+    @Get('search/:query')
+    async getByQuery(@Param() parameter): Promise<User[]> {
+        const a = this.service.getByQuery(parameter.query);
+        if (a != undefined) {
+            return a;
+        } else {
+            throw new HttpException(
+              `Could not find users`,
+              HttpStatus.NOT_FOUND,
+            );
+        }
+    }
+
     @Put(':id')
     @ApiCreatedResponse({
         description: 'User has been successfully modified'
@@ -85,10 +98,11 @@ export class UsersController {
         }
     }
 
-     @Get(':id/:associations')
+     @Get(':id/associations')
      async getAssociations(@Param() parameter): Promise<Association[]>{
          return this.serviceA.getAssociationsOfMember(parseInt(parameter.id));
  }
+
 }
 
 

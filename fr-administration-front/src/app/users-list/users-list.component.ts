@@ -22,7 +22,7 @@ export class UsersListComponent implements OnInit {
       { observe: 'response' },
     );
     request.subscribe({
-      next: (response) => (this.dataSource = response.body),
+      next: (response) => (this.dataSource = response.body,console.log(this.dataSource)),
 });
   }
 

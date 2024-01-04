@@ -16,6 +16,7 @@ import { AssociationsListComponent } from './associations-list/associations-list
 import { UsersDetailsComponent } from './users-details/users-details.component';
 import {FormsModule} from "@angular/forms";
 import { AssociationsDetailsComponent } from './associations-details/associations-details.component';
+import { SearchComponent } from './search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { AssociationsDetailsComponent } from './associations-details/association
     AssociationsListComponent,
     UsersDetailsComponent,
     AssociationsDetailsComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

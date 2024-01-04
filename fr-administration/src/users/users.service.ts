@@ -33,6 +33,23 @@ export class UsersService {
   return await this.userRepository.findOne({where: {id: idToFind}});
   }
 
+  public async getByQuery(NameToFind: string): Promise<User[]> {
+    console.log(NameToFind);
+
+    let whereClause: any = [];
+
+    const parsedId = parseInt(NameToFind);
+    if (!isNaN(parsedId)) {
+      whereClause.push({ id: parsedId });
+    }
+
+    whereClause.push({ lastname: NameToFind }, { firstname: NameToFind });
+
+    return await this.userRepository.find({
+      where: whereClause,
+    });
+  }
+
 
  public async update(id:number, lastname: string, firstname: string, age: number, password: string): Promise<boolean> {
    const temp = await this.userRepository.findOne({ where:{id: id}});
