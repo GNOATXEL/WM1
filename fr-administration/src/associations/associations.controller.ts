@@ -96,5 +96,18 @@ export class AssociationsController {
      async getMinutes(@Param() parameter): Promise<Minute[]>{
          return this.serviceM.getMinutesOfAssociation(parseInt(parameter.id));
      }
+
+    @Get('search/:query')
+    async getByQuery(@Param() parameter): Promise<Association[]> {
+        const a = this.service.getByQuery(parameter.query);
+        if (a != undefined) {
+            return a;
+        } else {
+            throw new HttpException(
+                `Could not find users`,
+                HttpStatus.NOT_FOUND,
+            );
+        }
+    }
 }
 

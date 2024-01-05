@@ -19,13 +19,14 @@ export class AssociationsService {
 
     async create(idUsers: number[], name: string): Promise<Association> {
         let users: User[] = [];
+        if(idUsers!==undefined){
         if(idUsers.length!=0){
             for(let i = 0;i<idUsers.length;i++){
             let userToPush: User;
             userToPush =  await this._service.getById(idUsers[i]);
             users.push(userToPush);
         }
-        }
+        }}
         console.log('après if');
         const a= new Association(users, name);
         console.log(a);
@@ -38,9 +39,21 @@ export class AssociationsService {
 
             }
 
-    async SearchByName(name:string):Promise<Association[]> {
-        return this.associationRepository.find({where:{name:Equal(name)}})
+    public async getByQuery(NameToFind: string): Promise<Association[]> {
+        console.log(NameToFind);
 
+        let whereClause: any = [];
+
+        const parsedId = parseInt(NameToFind);
+        if (!isNaN(parsedId)) {
+            whereClause.push({ id: parsedId });
+        }
+
+        whereClause.push({ name: NameToFind });
+
+        return await this.associationRepository.find({
+            where: whereClause,
+        });
     }
 
     async update(id:number, users: User[] , name: string): Promise<boolean> {
