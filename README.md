@@ -72,7 +72,7 @@ Les fonctionnalités disponibles en front-end sont les suivantes :
 * Supprimer une association ou un utilisateur.
 * Ajouter un utilisateur.
 * Ajouter une association.
-* * rechercher un utilisateur ou une association par son id
+* rechercher un utilisateur ou une association par son id
 
 Ce qui reste à faire :
 
