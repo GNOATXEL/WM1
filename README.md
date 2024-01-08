@@ -50,6 +50,7 @@ En haut de la page, une barre de navigation offre les options suivantes :
 * Un bouton de profil.
 * Un bouton "Users List" pour afficher tous les utilisateurs.
 * Un bouton "Association List" pour afficher toutes les associations.
+* un barre de recherche pour chercher un utilisateur ou une association par son id
 
 #### Users list
 Dans la section "Users List", vous pouvez ajouter un nouvel utilisateur en fournissant le nom, le prénom, l'âge et un mot de passe. Vous pouvez également supprimer un utilisateur à l'aide du bouton de corbeille.
@@ -71,8 +72,8 @@ Les fonctionnalités disponibles en front-end sont les suivantes :
 * Supprimer une association ou un utilisateur.
 * Ajouter un utilisateur.
 * Ajouter une association.
+* * rechercher un utilisateur ou une association par son id
 
 Ce qui reste à faire :
 
 * Modifier une association (modification des rôles, par exemple).
-* rechercher un utilisateur ou une association par son id
