@@ -61,7 +61,7 @@ Dans la section "Association List", vous trouverez la liste des associations et 
 Dans cette même section, il est possible d'accéder au information d'une association (informations sur l'association, ses membres et ses minutes) ,il vous suffit de cliquer sur son id. Vous allez ainsi pouvoir voir ses informations
 
 ## Résumé
-Les étapes (qui se refère au nom des partie du TP) du projet réalisé en back-end sont les suivantes:
+Les étapes (qui se refèrent au nom des parties du TP) du projet réalisé en back-end sont les suivantes:
 * Premier pas avec NestJS
 * Controleurs et premier API (Entité User)
 * modules et logique métier (Entité Association)
