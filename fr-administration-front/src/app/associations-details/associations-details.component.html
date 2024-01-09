@@ -7,7 +7,6 @@
     <div class="header-cell">Name</div>
     <div class="header-cell"></div>
   </div>
-
   <ng-container *ngFor="let asso of dataSourcent" class="data-rows">
     <div class="data-row">
       <div class="data-cell">{{ asso.name }}</div>
@@ -17,9 +16,19 @@
     </div>
   </ng-container>
 </div>
-
+<div class="centrer">
+<div class="input-container">
+  <input type="text" id="name" placeholder="Input" />
+  <a (click)="editName()"><button>Edit Name</button></a>
+</div>
+</div>
 <div class="title">Utilisateurs de l'association</div>
-
+<div class="centrer">
+<div class="input-container">
+  <input type="text" id="nameMember" placeholder="Input" />
+  <a (click)="ajoutMembre()"><button>Ajout d'un membre</button></a>
+</div>
+</div>
 <div>
   <table mat-table [dataSource]="dataSourcentU" class="container">
 
