@@ -82,6 +82,7 @@ div {
 .nogizaka {
   background-color: #8a2be2;
   color: white;
+  border-color: #8a2be2;
 }
 
 .sakurazaka {
@@ -94,11 +95,13 @@ div {
 .hinatazaka {
   background-color: lightskyblue;
   color: white;
+  border-color: lightskyblue;
 }
 
 .keyakizaka {
   background-color: lightgreen;
-  color: #8a2be2;
+  color: white;
+  border-color: lightgreen;
 }
 
 
@@ -277,4 +280,33 @@ ul.suggestions button {
   border-radius: 6px;
   font-size: 15px; /* Taille de police */
   cursor: pointer;
+}
+
+
+.blabla button {
+  padding: 10px 16px; /* Ajustez selon vos besoins */
+  margin-left: 20px;
+  text-align: center;
+  min-width: 50px;
+  border-radius: 6px;
+  font-size: 14px; /* Taille de police */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Animation de transition pour un effet hover */
+  opacity: 50%;
+}
+
+.buttongs {
+  margin-left: 550px;
+
+}
+
+.buttongs button.actives {
+  border-width: 2px;
+  border-color: #5d5d5d;
+  opacity: 100%;
+}
+
+.buttongs button.active {
+  border-width: 2px;
+  opacity: 100%;
 }
