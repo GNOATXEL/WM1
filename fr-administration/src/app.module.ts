@@ -14,6 +14,8 @@ import { Minute } from './minutes/minute.entity';
 import {RolesController} from "./roles/roles.controller";
 import {AuthService} from "./auth/auth.service";
 import {JwtService} from "@nestjs/jwt";
+import {SongModule} from "./song/song.module";
+import {Song} from "./song/song.entity";
 
 @Module({
   imports: [
@@ -24,11 +26,13 @@ import {JwtService} from "@nestjs/jwt";
                   User,
                   Association,
                   Role,
-                  Minute
+                  Minute,
+                  Song
               ],
               synchronize: true,
       }),
       UsersModule,
+      SongModule,
       AssociationsModule,
       AuthModule,
       RolesModule,
