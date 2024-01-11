@@ -61,6 +61,20 @@ Dans la section "Association List", vous trouverez la liste des associations et 
 Dans cette même section, il est possible d'accéder au information d'une association (informations sur l'association, ses membres et ses minutes) ,il vous suffit de cliquer sur son id. Vous allez ainsi pouvoir voir ses informations
 
 ## Résumé
+Les étapes (qui se refèrent au nom des parties du TP) du projet réalisé en back-end sont les suivantes:
+* Premier pas avec NestJS
+* Controleurs et premier API (Entité User)
+* modules et logique métier (Entité Association)
+* TypeORM, Repository et données
+* OpenAPI
+* Tester son backend NestJS
+* Sécurité
+* Entité Roles
+* Entité Minutes
+
+Ce qui reste à faire en back-end:
+* DTO mapping
+* API spécifiiques
 
 Les fonctionnalités disponibles en front-end sont les suivantes :
 
@@ -74,6 +88,6 @@ Les fonctionnalités disponibles en front-end sont les suivantes :
 * Ajouter une association.
 * rechercher un utilisateur ou une association par son id
 
-Ce qui reste à faire :
+Ce qui reste à faire en Front-end :
 
 * Modifier une association (modification des rôles, par exemple).
