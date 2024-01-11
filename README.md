@@ -1,4 +1,3 @@
-
 # Projet Web d'Axel MARTIN et Théo VINCENT
 
 ## Introduction
@@ -91,3 +90,7 @@ Les fonctionnalités disponibles en front-end sont les suivantes :
 Ce qui reste à faire en Front-end :
 
 * Modifier une association (modification des rôles, par exemple).
+
+## IMQ
+
+Axel s'ennuyait (après la date de rendu) et s'est amusé à faire un petit jeu de blind-test de musiques de groupes d'idols japonais (IMQ --> Idols Music Quiz, technique), accessible depuis la barre de navigation.
