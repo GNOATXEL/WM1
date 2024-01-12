@@ -28,7 +28,7 @@
     <a *ngIf="!skippable" (click)="skip()"><button id="skip">Skip</button></a>
   </div>
   <div>
-    <a *ngIf="!isNextClicked" (click)="start()"><button id="next">Next</button></a>
+    <a *ngIf="!isNextClicked && round!=0" (click)="start()"><button id="next">Next</button></a>
   </div>
   <div class="answer">
     <a *ngIf="!isNextClicked">Answer: {{ rightAnswer }}</a>
@@ -41,6 +41,9 @@
     'sakamichiakb': group === 'Sakamichi AKB',
      }">
     <a *ngIf="!isNextClicked" id="group">{{ group }}</a>
+  </div>
+  <div>
+    <a *ngIf="round!=0" (click)="stop()"><button id="stop">Stop</button></a>
   </div>
 </div>
 

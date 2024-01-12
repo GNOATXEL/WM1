@@ -34,8 +34,8 @@ export class IdolComponent {
   rightAnswer: string = "";
   group: string = "";
   status: number = 0;
-  songPool: any[] = [];
-  YT: any;
+  round: number = 0;
+  stopping: number = 0;
   @ViewChild('inputField') inputField!: ElementRef;
 
   ngOnInit(): void {
@@ -87,6 +87,7 @@ export class IdolComponent {
         let self = this;
         videoFrame.onload = function () {
           countdownTimer.textContent = `Loaded!`;
+          self.round+=1;
           self.inputField.nativeElement.focus();
           self.skipped = false;
           const timerInterval = setInterval(() => {
@@ -94,6 +95,16 @@ export class IdolComponent {
             self.shiftenter = true;
             if (seconds !== 0) {
               countdownTimer.textContent = `${seconds - 1}`;
+            }
+            if (self.stopping===1){
+              clearInterval(timerInterval);
+              countdownTimer.textContent = ``;
+              videoFrame.classList.remove('hidden');
+              countdownTimer.style.display = 'none';
+              self.isNextClicked = false;
+              self.rightAnswer = self.dataSource[0].name;
+              self.stopping=0;
+              return;
             }
             if (seconds === 0 || self.skipped) {
 
@@ -128,7 +139,7 @@ export class IdolComponent {
         this.answerValue = "";
         this.inputValue = '';
         this.starting = false;
-
+        self.stopping=0;
 
       }
     });
@@ -225,5 +236,24 @@ export class IdolComponent {
     }
     console.log(this.status)
 
+  }
+
+  stop(): void{
+    this.nameSuggestions = [];
+    this.showSuggestions = false;
+    this.inputValue = '';
+    this.answerValue = '';
+    this.result = '';
+    this.isStartClicked = false;
+    this.isNextClicked = true;
+    this.skippable = true;
+    this.starting = true;
+    this.shiftenter = true;
+    this.guesses = 0;
+    this.total = 0;
+    this.skipped = false;
+    this.status = 0;
+    this.round = 0;
+    this.stopping=1;
   }
 }
