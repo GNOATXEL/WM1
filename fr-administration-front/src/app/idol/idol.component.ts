@@ -39,6 +39,9 @@ export class IdolComponent {
   @ViewChild('inputField') inputField!: ElementRef;
 
   ngOnInit(): void {
+    this.api.post({
+      endpoint: '/song/count'
+    }).then(response => console.log('cc'))
     const request: Observable<any> = this.http.get(
       'http://localhost:3000/song',
       {observe: 'response'},

@@ -17,6 +17,7 @@ export class SongController {
     private saku = 0;
     private hina = 0;
     private keya = 0;
+    private cross = 0;
 
     @Post()
     @ApiCreatedResponse({
@@ -55,10 +56,12 @@ export class SongController {
     @ApiCreatedResponse({
         description: 'Song has been successfully returned'
     })
-    async load(@Param() parameter, @Body() input: any): Promise<void> {
+    async load(@Param() parameter): Promise<void> {
+        let filePath="dataent.txt"
+        this.nogi=this.hina=this.keya=this.saku=this.cross=0;
         this.service.clear();
         let k = 0;
-        fs.readFile(input.filePath, 'utf-8', (err, data) => {
+        fs.readFile(filePath, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Erreur de lecture du fichier :', err);
                 return;
@@ -84,8 +87,11 @@ export class SongController {
                             this.hina+=1;
                         } else if(dataArray[4].trim()==="Keyakizaka46"){
                             this.keya+=1;
+                        } else{
+                            console.log(dataArray[4].trim())
+                            this.cross+=1;
                         }
-                        console.log(this.nogi+' '+this.hina+' '+this.saku+' '+this.keya);
+                        console.log(this.nogi+' '+this.hina+' '+this.saku+' '+this.keya+' '+this.cross);
 
                         this.service.create(dataArray[0], parseInt(dataArray[1]), parseInt(dataArray[2]), dataArray[3], dataArray[4]);
                         resolve();
@@ -106,6 +112,21 @@ export class SongController {
             processLines();
         });
 
+    }
+
+
+    @Post('count')
+    @ApiCreatedResponse({
+        description: 'Song has been successfully returned'
+    })
+    async count(): Promise<void> {
+        const tab = await this.service.count();
+        this.nogi=tab[0];
+        this.saku=tab[1];
+        this.hina=tab[2];
+        this.keya=tab[3];
+        this.cross=tab[4]
+        console.log( [this.nogi,this.saku,this.hina,this.keya,this.cross])
     }
 
 
@@ -197,7 +218,7 @@ export class SongController {
 
             case 1000:
                 minId = await this.service.getSmallestId() + this.nogi + this.saku + this.hina;
-                maxId = minId + this.keya - 1;
+                maxId = await this.service.getMaxId()-4;
                 minId2 = 0;
                 maxId2 = 0;
                 weight = 1;
@@ -209,7 +230,7 @@ export class SongController {
                 minId = await this.service.getSmallestId() + this.nogi + this.saku + this.hina;
                 maxId = minId + this.keya - 1;
                 minId2 = await this.service.getSmallestId();
-                maxId2 = minId2 + this.nogi - 1;
+                maxId2 = await this.service.getMaxId()-4;
                 weight = this.keya/(this.keya+this.nogi);
                 weight2 = this.nogi/(this.keya+this.nogi)
                 console.log("keya + nogi");
@@ -219,7 +240,7 @@ export class SongController {
                 minId = await this.service.getSmallestId() + this.nogi + this.saku + this.hina;
                 maxId = minId + this.keya - 1;
                 minId2 = await this.service.getSmallestId() + this.nogi;
-                maxId2 = minId2 + this.saku - 1;
+                maxId2 = await this.service.getMaxId()-4;
                 weight = this.keya/(this.keya+this.saku);
                 weight2 = this.saku/(this.keya+this.saku)
                 console.log("keya + saku");
@@ -229,7 +250,7 @@ export class SongController {
                 minId = await this.service.getSmallestId() + this.nogi + this.saku + this.hina;
                 maxId = minId + this.keya - 1;
                 minId2 = await this.service.getSmallestId();
-                maxId2 = minId2 + this.nogi + this.saku - 1;
+                maxId2 = await this.service.getMaxId()-4;
                 weight = this.keya/(this.keya+this.saku+this.nogi);
                 weight2 = (this.saku+this.nogi)/(this.keya+this.saku+this.nogi)
                 console.log("keya + saku + nogi");
@@ -237,7 +258,7 @@ export class SongController {
 
             case 1100:
                 minId = await this.service.getSmallestId() + this.nogi + this.saku;
-                maxId = minId +this.hina + this.keya - 1;
+                maxId = await this.service.getMaxId()-4;
                 minId2 = 0;
                 maxId2 = 0;
                 weight = 1;
@@ -249,20 +270,30 @@ export class SongController {
                 minId = await this.service.getSmallestId() + this.nogi + this.saku;
                 maxId = minId + this.hina + this.keya - 1;
                 minId2 = await this.service.getSmallestId();
-                maxId2 = minId2 + this.nogi - 1;
+                maxId2 = await this.service.getMaxId()-4;
                 weight = (this.keya+this.hina)/(this.keya+this.hina+this.nogi);
                 weight2 = (this.nogi)/(this.keya+this.hina+this.nogi)
                 console.log("keya + hina + nogi");
                 break;
 
-            default:
+            case 1111:
                 minId = await this.service.getSmallestId();
                 maxId = await this.service.getMaxId();
+                minId2 = 0;
+                maxId2 = 0;
+                weight = 1;
+                weight2 = 0
+                console.log("crossover on");
+                break;
+
+            default:
+                minId = await this.service.getSmallestId();
+                maxId = await this.service.getMaxId()-4;
                 minId2 = 0
                 maxId2 = 0
                 weight = 1
                 weight2 = 0
-                console.log("mouais");
+                console.log("crossover off");
                 break;
         }
 

@@ -71,11 +71,11 @@ div {
   color: white; /* Texte en blanc */
   margin-left: 20px;
   text-align: center;
-  border: none;
+  //border: none;
   min-width: 100px;
   border-radius: 6px;
   font-size: 16px; /* Taille de police */
-  cursor: pointer;
+  //cursor: pointer;
   transition: background-color 0.3s ease; /* Animation de transition pour un effet hover */
 }
 
@@ -102,6 +102,22 @@ div {
   background-color: lightgreen;
   color: white;
   border-color: lightgreen;
+}
+
+.iz {
+  background-color: pink;
+  color: orange;
+  border-style: solid;
+  //border-width: 1px;
+  border-color: purple;
+}
+
+.sakamichiakb {
+  background-color: pink;
+  color: white;
+  border-style: solid;
+  //border-width: 1px;
+  border-color: purple;
 }
 
 
