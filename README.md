@@ -96,4 +96,4 @@ Ce qui reste à faire en Front-end :
 
 Axel s'ennuyait (après la date de rendu) et s'est amusé à faire un petit jeu de blind-test de musiques des groupes d'idols japonais de la Sakamichi Series (SMQ --> Sakamichi Music Quiz, technique), accessible depuis la barre de navigation. Le principe est simple, après avoir appuyé sur "Start" il faut deviner les titres des musiques (en caractères romains) qui passent et les rentrer dans le champ de réponse. À partir de 3 caractères entrés, 5 suggestions s'afficheront sous le champ de réponse si le titre existe dans la database (d'environ 500 musiques, taper par exemple "nak" affichera 5 noms contenant "nak" ), et il est possible de cliquer dessus ou de faire Tab + ENTREE.
 La database contient 4 groupes, les boutons en haut à droite permettent de choisir quels groupes peuvent jouer (ne rien cliquer met tout par défaut).
-Le score est affiché en haut à gauche, ainsi que le résultat du joueur sur le dernier song.
+Le score est affiché en haut à gauche, ainsi que le résultat du joueur sur la dernière musique.
