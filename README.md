@@ -91,6 +91,6 @@ Ce qui reste à faire en Front-end :
 
 * Modifier une association (modification des rôles, par exemple).
 
-## IMQ
+## SMQ
 
 Axel s'ennuyait (après la date de rendu) et s'est amusé à faire un petit jeu de blind-test de musiques des groupes d'idols japonais de la Sakamichi Series (SMQ --> Sakamichi Music Quiz, technique), accessible depuis la barre de navigation.
