@@ -108,11 +108,12 @@ export class IdolComponent {
             }
             if (seconds === 0 || self.skipped) {
 
+              videoFrame.classList.remove('hidden');
+
               setTimeout(() => {
                 clearInterval(timerInterval);
-                countdownTimer.textContent = ``;
-                videoFrame.classList.remove('hidden');
                 countdownTimer.style.display = 'none';
+                countdownTimer.textContent = ``;
 
                 self.isNextClicked = false;
                 self.skippable = true;
@@ -129,7 +130,7 @@ export class IdolComponent {
                   self.total += 1;
                   self.shiftenter = true;
                 }
-              }, 100);
+              }, 20);
 
             }
             ; // Actualise toutes les secondes
